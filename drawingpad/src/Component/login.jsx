@@ -7,6 +7,7 @@ let PlatformBarConfig = getPlatformBarConfig();
 PlatformBarConfig["on_auth_state_change"] = function(state) {
   console.log("state",state);
 };
+//this is the first checkinf
 class login extends Component {
   constructor(props) {
       super(props);
@@ -21,6 +22,7 @@ class login extends Component {
       <div>
         <Authenticator initConfig={ PlatformBarConfig } />
         <p>welcome</p>
+        <p>haskd</p>
         <button>Login</button>
       </div>
     );
