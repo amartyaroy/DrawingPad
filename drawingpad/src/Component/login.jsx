@@ -2,11 +2,13 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import { Authenticator } from "@bitpod/platform-bar-shell-react";
 import { getPlatformBarConfig } from  '../Config';
+import './login.css'
 let PlatformBarConfig = getPlatformBarConfig();
 
 PlatformBarConfig["on_auth_state_change"] = function(state) {
   console.log("state",state);
 };
+
 class login extends Component {
   constructor(props) {
       super(props);
@@ -18,10 +20,9 @@ class login extends Component {
   }
   render() {
     return (
-      <div>
-        <Authenticator initConfig={ PlatformBarConfig } />
-        <p>welcome</p>
-        <button>Login</button>
+      <div id="header_bar">
+        <Authenticator initConfig={ PlatformBarConfig }/>
+        <h3 id="app_name">Ⓓⓡⓐⓦⓘⓝⓖ Ⓟⓐⓓ</h3>
       </div>
     );
   }

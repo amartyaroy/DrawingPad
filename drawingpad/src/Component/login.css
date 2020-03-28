@@ -1,0 +1,31 @@
+#header_bar{
+    background-color: #3b78e7;
+    height: 50px;
+}
+.c1{
+    float: right;
+}
+#app_name{
+    font: icon;
+    color:#f2f2f2;
+    font-size: xx-large;
+    margin: 0 0 0 10px;
+}
+.platform-user-icon{
+    color: #3b78e7;
+    font-weight: bold;
+    position: relative;
+    bottom: 5px;
+}
+.user-profile{
+    width: 40px !important;
+    height: 40px !important;
+    background-color: #f2f2f2;
+    border-radius: 20px;
+    position: relative;
+    top: 5px;
+    right: 10px;
+}
+.sign-in-button{
+    margin-right: 5px;
+}
