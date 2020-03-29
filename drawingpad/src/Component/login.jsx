@@ -20,13 +20,14 @@ class login extends Component {
   }
   render() {
     return (
-      <div className="bg bg-color=blue">
-       
-              <ul id="nav">
-                
-                <li><Authenticator initConfig={ PlatformBarConfig } /></li>
-              </ul>
-        
+      <div id="container_box">  
+        <div id="header_bar">
+          <Authenticator initConfig={ PlatformBarConfig }></Authenticator>
+          <h3 id="app_name">Ⓓⓡⓐⓦⓘⓝⓖ Ⓟⓐⓓ</h3>
+        </div>
+        <div id="canvas_box">
+          
+        </div>
       </div>
     );
   }
