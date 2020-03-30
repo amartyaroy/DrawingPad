@@ -47,21 +47,15 @@ class login extends Component {
   render() {
     let { isLoggedIn } =this.state;
     return (
-      <div className="bg bg-color=blue">
-       
-              <ul id="nav">
-                
-                <li><Authenticator initConfig={ PlatformBarConfig } /></li>
-                
-                
-                
-              </ul>
-              <Canvas/>
-           
+      <div id="container_box">  
+        <div id="header_bar">
+          <Authenticator initConfig={ PlatformBarConfig }></Authenticator>
+          <h3 id="app_name">Ⓓⓡⓐⓦⓘⓝⓖ Ⓟⓐⓓ</h3>
+        </div>
+        <div id="canvas_box">
+          <Canvas/>
+        </div>
 
-             
-              
-              
       </div>
     );
   }

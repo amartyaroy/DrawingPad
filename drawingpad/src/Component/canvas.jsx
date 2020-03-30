@@ -2,6 +2,7 @@ import React,{Component} from "react";
 import reactDom from "react-dom";
 import CanvasDraw from 'react-canvas-draw';
 
+
 class Canvas extends Component {
     state = { 
     color: "#ffc600",
@@ -21,10 +22,8 @@ class Canvas extends Component {
       }
     render() { 
         return (
-           <div>
-                <CanvasDraw
-                   
-                />
+           <div className="CanvasContainer">
+                <CanvasDraw/>
            </div> 
           )
     }
