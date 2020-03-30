@@ -12,14 +12,7 @@ class Canvas extends Component {
     lazyRadius: 12
 
      }
-     componentDidMount() {
-        // let's change the color randomly every 2 seconds. fun!
-        window.setInterval(() => {
-          this.setState({
-            color: "#" + Math.floor(Math.random() * 16777215).toString(16)
-          });
-        }, 2000);
-      }
+     
     render() { 
         return (
            <div className="CanvasContainer">
