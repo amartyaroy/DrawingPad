@@ -2,20 +2,33 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import { Authenticator } from "@bitpod/platform-bar-shell-react";
 import { getPlatformBarConfig } from  '../Config';
+
 import Canvas from './canvas';
+
+import Layout from './layout';
+
+import './login.css';
+
 
 let PlatformBarConfig = getPlatformBarConfig();
 let access_token;
-PlatformBarConfig["on_auth_state_change"] = function(state1) {
+function state(){
+  PlatformBarConfig["on_auth_state_change"] = function(state1) {
   
-  if(state1!=null){
-    access_token=state1.access_token;
-  
-  }
- };
+    if(state1!=null){
+      access_token=state1.access_token;
+    
+    }
+   };
+  return state;
+}
+
+
+
+
 
 //this is the first checkinf
-class login extends Component {
+export default class login extends Component {
   constructor(props) {
       super(props);
 
@@ -32,7 +45,7 @@ class login extends Component {
 
 
   setLoginState=(status)=>{
-    
+
     console.log('setting state',status);
     if(this.status!=null){
      
@@ -53,7 +66,11 @@ class login extends Component {
           <h3 id="app_name">Ⓓⓡⓐⓦⓘⓝⓖ Ⓟⓐⓓ</h3>
         </div>
         <div id="canvas_box">
-          <Canvas/>
+
+         
+
+          <Layout/>
+
         </div>
 
       </div>
@@ -61,4 +78,4 @@ class login extends Component {
   }
 }
 
-export default login;
+
