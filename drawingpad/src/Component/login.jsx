@@ -66,8 +66,7 @@ export default class login extends Component {
           <h3 id="app_name">Ⓓⓡⓐⓦⓘⓝⓖ Ⓟⓐⓓ</h3>
         </div>
         <div id="canvas_box">
-            <p>hasikdlakwudoajw  ldjawldjawldjasldjlasd</p>
-         
+
 
           <Layout/>
 
