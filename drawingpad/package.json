@@ -11,7 +11,10 @@
     "react": "^16.13.1",
     "react-canvas-draw": "^1.1.0",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1"
+    "react-resizable-rotatable-draggable": "^0.2.0",
+    "react-scripts": "3.4.1",
+    "react-shapes": "^0.1.0",
+    "styled-components": "^5.0.1"
   },
   "scripts": {
     "start": "set PORT=8080 && react-scripts start",

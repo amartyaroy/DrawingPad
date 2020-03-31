@@ -67,7 +67,6 @@ export default class login extends Component {
         </div>
         <div id="canvas_box">
 
-         
 
           <Layout/>
 
