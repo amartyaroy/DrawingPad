@@ -1,13 +1,16 @@
 import React, { Component } from "react";
-import CanvasDraw from 'react-canvas-draw';
 import './layout.css';
-import {Rectangle,Circle,Square,Triangle} from 'react-shapes';
 import Shapes from "./Shapes";
 import { SketchPicker } from 'react-color';
-import RectangleSelection from "react-rectangle-selection"
+
+
 
 
 class Layout extends Component {
+    constructor(props){
+        super(props);
+        this.handleRotate = this.handleRotate.bind(this);
+    }
     state={
         width: 100,
         height: 100,
@@ -27,7 +30,8 @@ class Layout extends Component {
         strokeWidth:'3',
         border:'3px dotted black',
         isSelected:'body',
-        background:'#000000'
+        background:'#000000',
+        polygonPoints:"0,100,50,0,100,100"
 
     }
     handleChangeColor=(color)=>{
@@ -36,12 +40,21 @@ class Layout extends Component {
     }
     selectShape=(shapes)=>{
         let temp=this.state.arrayShapes;
-        temp.push({shape:shapes,
-            // width: 100,
-            // height: 100,
-            // top: 100,
-            // left: 100,
-            // rotateAngle: 0,
+        temp.push({
+            shape:shapes,
+            width: this.state.width,
+            height:this.state.height ,
+            top: this.state.top,
+            left: this.state.left,
+            rotateAngle: this.state.rotateAngle,
+            radius:this.state.radius,
+            stroke:this.state.stroke,
+            strokeWidth:this.state.strokeWidth,
+            x_cord:this.state.x_cord,
+            y_cord:this.state.y_cord,
+            fill:this.state.fill,
+            polygonPoints:this.state.polygonPoints
+
         });
         this.setState((state)=>{
             return {isDrawable:!state.isDrawable,
@@ -52,7 +65,7 @@ class Layout extends Component {
                 }
         })
 
-        console.log(this.state);
+    
         
     }
 
@@ -71,10 +84,21 @@ class Layout extends Component {
        )
 
    }
+   createToolBar=()=>{
+       return(
+           <ul>
+               {
+                   this.toolbar_items.map(ele=>{
+                       return(
+                           <button id={ele}>{ele}</button>
+                       )
+                   })
+               }
+           </ul>
+       )
+   }
    handleResize = (style, isShiftKey, type) => {
-      
-    
-    
+   
     let { top, left, width, height } = this.state;
     top = Math.round(height)
     left = Math.round(top)
@@ -87,17 +111,18 @@ class Layout extends Component {
       width,
       height
     })
-  
-
-
+ 
   }
     handleRotate = (rotateAngle) => {
+       console.log("rotate called");
+      
         this.setState({
-        rotateAngle
+            rotateAngle
         })
-       
+
     }
     handleDrag = (deltaX, deltaY) => {
+        console.log("drag called");
         this.setState({
         left: this.state.left + deltaX,
         top: this.state.top + deltaY
@@ -106,12 +131,12 @@ class Layout extends Component {
     }
    
     render(){
-        let shape=this.state.selectedShape;
-        let toolbar_items=[]
+      
+        let toolbar_items=['New','Open','Save'];
        
         let right_horizontal_bar_items=[]
 
-        let left_horizontal_bar_items=[Rectangle,Circle,Square,Triangle]
+        let left_horizontal_bar_items=[]
   
 
         toolbar_items.push(<button>qwerty</button>)
@@ -126,7 +151,7 @@ class Layout extends Component {
                 <div id="toolbar" className="z-depth-1">{toolbar_items}</div>
                 <div id="center_body" className="row">
                     <div id="left_horizontal_bar" className="col s2 z-depth-1">{this.createShapes()}</div>
-                    <Shapes  name={this.state.arrayShapes} ob={this.state}  onRot={this.handleRotate} onRes={this.handleResize} onDra={this.handleDrag} />
+                    <Shapes   name={this.state.arrayShapes} ob={this.state}  onRot={this.handleRotate} onRes={this.handleResize} onDra={this.handleDrag} />
                     <div id="right_horizontal_bar" className="col s2 z-depth-1">{right_horizontal_bar_items}</div>
                 </div>
             </div>
