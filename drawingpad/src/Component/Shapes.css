@@ -8,3 +8,7 @@
 .resizable-handler{
    color:black !important;
 }
+#canvas_body{
+    overflow:overlay;
+    position: relative;
+}
