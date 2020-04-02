@@ -1,12 +1,21 @@
 #toolbar{
     margin-bottom: 10px !important;
     padding: 5px;
+    position: relative;
+    display: flex;
+   
+   
+
 }
 
 body{
     min-width: 600px;
 }
-
+.btn{
+    flex-grow: inherit;
+    margin-left: 10px;
+    display: inline-flex;
+}
 #left_horizontal_bar{
     padding: 5px;
     height: 100%;

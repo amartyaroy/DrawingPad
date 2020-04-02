@@ -1,18 +1,32 @@
 import { SketchPicker } from 'react-color';
 import React, { Component } from "react";
 import Shapes from "./Shapes";
+import Moveable from "react-moveable";
 import './layout.css';
- 
+
+
 class Layout extends Component {
-    constructor(props){
-        super(props);
-        this.handleRotate = this.handleRotate.bind(this);
-    }
+   
     state={
+        
         left_horizontal_bar_items:['Rectangle','Circle','Square','Triangle'],
+        toolbar_items:['Create','Save'],
         arrayShapes:[],
         background:'#000000',
-        isSelected:0
+        isSelected:0,
+        ///////////////////
+        scaleX: 1,
+        scaleY: 1,
+        target: null,
+        container: null,
+        scalable: true,
+        resizable: false,
+        width: "250px",
+        height: "200px",
+        left: "100px",
+        top: "100px",
+        rotateAngle: "0deg"
+       
     }
     clicked=(index)=>{
         console.log(index);
@@ -24,48 +38,65 @@ class Layout extends Component {
         this.setState({ background: color.hex });
 
     }
+   
+
+   
     selectShape=(shapes)=>{
         let temp=this.state.arrayShapes;
-        if(shapes=="Rectangle"){
+        if(shapes === "Rectangle"){
             temp.push({
                 shape:shapes,
-                width: 200,
-                height:100 ,
-                top: 100,
-                left: 200,
-                rotateAngle: 0,
-                strokeWidth:'3',
-                stroke:'#000000',
-                fill:'white'
-            })    
-                
-        }
-        else if(shapes=="Square"){
-            temp.push({
-                shape:shapes,
-                width: 100,
-                height:100 ,
-                top: 100,
-                left: 200,
-                rotateAngle: 0,
-                strokeWidth:'3',
-                stroke:'#000000',
-                fill:'white'
-            })    
-                
-        }
-        else if(shapes=="Triangle"){
-            temp.push({
-                shape:shapes,
-                width: 100,
-                height:100 ,
-                top: 100,
-                left: 200,
-                rotateAngle: 0,
+                width:this.state.width,
+                height:this.state.height,
+                top: this.state.top,
+                left: this.state.left,
+                rotateAngle:this.state.rotateAngle,
                 strokeWidth:'3',
                 stroke:'#000000',
                 fill:'white',
-                polygonPoints:'0,100,50,0,100,100'
+                target: null,
+                container:null,
+                scalable: true,
+                resizable: false,
+                        
+            })    
+                
+        }
+        else if(shapes === "Square"){
+            temp.push({
+                shape:shapes,
+                width:this.state.width,
+                height:this.state.height,
+                top: this.state.top,
+                left: this.state.left,
+                rotateAngle:this.state.rotateAngle,
+                strokeWidth:'3',
+                stroke:'#000000',
+                fill:'white',
+                target: null,
+                container:null,
+                scalable: true,
+                resizable: false,
+               
+            })    
+                
+        }
+        else if(shapes === "Triangle"){
+            temp.push({
+                shape:shapes,
+                width:this.state.width,
+                height:this.state.height,
+                top: this.state.top,
+                left: this.state.left,
+                rotateAngle:this.state.rotateAngle,
+                strokeWidth:'3',
+                stroke:'#000000',
+                fill:'white',
+                polygonPoints:'0,100,50,0,100,100',
+                target: null,
+                container:null,
+                scalable: true,
+                resizable: false,
 
             })    
                 
@@ -73,17 +104,21 @@ class Layout extends Component {
         else{
             temp.push({
                 shape:shapes,
-                width: 100,
-                height:100 ,
-                top: 100,
-                left: 200,
-                rotateAngle: 0,
+                width:this.state.width,
+                height:this.state.height,
+                top: this.state.top,
+                left: this.state.left,
+                rotateAngle:this.state.rotateAngle,
                 strokeWidth:'3',
                 stroke:'#000000',
                 fill:'white',
                 x_cord:'50',
                 y_cord:'50',
                 radius:'50',
+                target: null,
+                container:null,
+                scalable: true,
+                resizable: false,
 
             })    
                 
@@ -100,54 +135,27 @@ class Layout extends Component {
            {
                this.state.left_horizontal_bar_items.map(ele=>{
                    return (
-                       <button onClick={this.selectShape.bind(this,ele)} id={ele}>{ele}</button>
+                       <button class="btn btn-warning" onClick={this.selectShape.bind(this,ele)} id={ele}>{ele}</button>
                    )
                })
            }
            </ul>
        )
    }
-   createToolBar=()=>{
-       return(
-           <ul>
-               {
-                   this.toolbar_items.map(ele=>{
-                       return(
-                           <button id={ele}>{ele}</button>
-                       )
-                   })
-               }
-           </ul>
-       )
-   }
+   createToolbar=()=>{
+    return(
+        <ul>
+        {
+            this.state.toolbar_items.map(ele=>{
+                return (
+                    <button class="btn btn-primary" onClick={this.selectShape.bind(this,ele)} id={ele}>{ele}</button>
+                )
+            })
+        }
+        </ul>
+    )
+}
 
-   handleResize = (style, isShiftKey, type) => {
-        let { top, left, width, height } = style;
-        var temp=this.state.arrayShapes;
-        temp[this.state.isSelected].top = Math.round(top)
-        temp[this.state.isSelected].left = Math.round(left)
-        temp[this.state.isSelected].width = Math.round(width);
-        temp[this.state.isSelected].height = Math.round(height);
-        this.setState({
-            arrayShapes:temp
-        })
-    }
-    handleRotate = (rotateAngle) => {
-        var temp=this.state.arrayShapes;
-        temp[this.state.isSelected].rotateAngle=rotateAngle;
-        this.setState({
-            arrayShapes:temp
-        })
-    }
-    handleDrag = (deltaX, deltaY) => {
-        var temp=this.state.arrayShapes;
-        temp[this.state.isSelected].left+=deltaX;
-        temp[this.state.isSelected].top+=deltaY;
-        this.setState({
-            arrayShapes:temp
-        })
-       
-    }
     render(){
         let toolbar_items=['New','Open','Save'];
         let right_horizontal_bar_items=[]
@@ -165,10 +173,10 @@ class Layout extends Component {
         
         return(
             <div id="final_layout">
-                <div id="toolbar" className="z-depth-1">{toolbar_items}</div>
+                <div id="toolbar" className="z-depth-1">{this.createToolbar()}{this.createShapes()}</div>
                 <div id="center_body" className="row">
-                    <div id="left_horizontal_bar" className="col s2 z-depth-1">{this.createShapes()}</div>
-                    <Shapes   name={this.state.arrayShapes}  onRot={this.handleRotate} onRes={this.handleResize} onDra={this.handleDrag} clicke={this.clicked}/>
+                    {/* <div id="left_horizontal_bar" className="col s2 z-depth-1">{this.createShapes()}</div> */}
+                    <Shapes   name={this.state.arrayShapes}   onRot={this.onRotate} onRes={this.onResize} onDra={this.onDrag} clicke={this.clicked}/>
                     <div id="right_horizontal_bar" className="col s2 z-depth-1">{right_horizontal_bar_items}</div>
                 </div>
             </div>

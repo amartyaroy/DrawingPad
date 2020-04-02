@@ -12,8 +12,13 @@
     "react-canvas-draw": "^1.1.0",
     "react-color": "^2.18.0",
     "react-dom": "^16.13.1",
+    "react-draggable": "^4.2.0",
+    "react-file-download": "^0.3.5",
+    "react-moveable": "^0.19.1",
     "react-rectangle-selection": "^1.0.4",
+    "react-resizable": "^1.10.1",
     "react-resizable-rotatable-draggable": "^0.2.0",
+    "react-rotatable": "^1.0.2",
     "react-scripts": "3.4.1",
     "react-shapes": "^0.1.0",
     "styled-components": "^5.0.1"
