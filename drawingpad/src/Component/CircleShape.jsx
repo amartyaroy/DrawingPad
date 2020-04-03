@@ -18,11 +18,11 @@ export default class Rectangle_Shape extends Component {
       <div  onMouseEnter={()=>this.props.cliclee(this.props.id)} >
         <Moveable
           height={height}
-          width={width}
+          width={width} 
           left={left}
           top={top}
           throttleDrag={1}
-          container={document.querySelector("canvas_body")}
+          container={document.querySelector("body")}
           target={this.props.target}
           draggable={true}
           sizeable={false}

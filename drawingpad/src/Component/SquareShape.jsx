@@ -22,7 +22,7 @@ export default class Rectangle_Shape extends Component {
           left={left}
           top={top}
           throttleDrag={1}
-          container={document.querySelector("canvas_body")}
+          container={document.querySelector("body")}
           target={this.props.target}
           draggable={true}
           sizeable={false}
@@ -34,7 +34,7 @@ export default class Rectangle_Shape extends Component {
             width: `${width}px`,
             height: `${height}px`,
             left: `${left}px`,
-            top: `${top}px`,
+            top: `${top}px`, 
             position: "absolute",
             //border: "1px solid black"
           }} >

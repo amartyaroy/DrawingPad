@@ -19,7 +19,7 @@ export default class Rectangle_Shape extends Component {
         <Moveable
           height={height}
           width={width}
-          left={left}
+          left={left} 
           top={top}
           throttleDrag={1}
           container={document.querySelector("body")}
