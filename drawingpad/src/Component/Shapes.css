@@ -13,3 +13,6 @@
     position: relative;
     min-height: 500px;
 }
+.moveable-control-box{
+    position: fixed !important;
+}
