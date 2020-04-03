@@ -15,14 +15,18 @@ export default class Rectangle_Shape extends Component {
   render() {
     const { left, top, height, width,fill,stroke,strokeWidth,radius,y_cord,x_cord } = this.props;
     return (
-      <div  onMouseEnter={()=>this.props.cliclee(this.props.id)} >
+      <div  onMouseEnter={()=>this.props.mouseHover(this.props.id)} 
+            onMouseLeave={()=>this.props.mouseLeave(this.props.id)}
+            onClick={()=>this.props.cliclee(this.props.id)}
+            onMouseDown={()=>this.props.mousedown()}
+            onMouseUp={()=>this.props.mouseup()}  >
         <Moveable
           height={height}
           width={width} 
           left={left}
           top={top}
           throttleDrag={1}
-          container={document.querySelector("body")}
+          container={document.querySelector("#canvas_body")}
           target={this.props.target}
           draggable={true}
           sizeable={false}
