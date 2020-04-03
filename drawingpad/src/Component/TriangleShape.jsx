@@ -8,8 +8,13 @@ export default class Rectangle_Shape extends Component {
   }
 
   onDrag = (...args) => {
-    console.log({ args });
+    //console.log({ args });
     this.props.onDrag(...args);
+  };
+
+  onResize = (...args) => {
+    //console.log({ args });
+    this.props.onResize(...args,this.props.shape);
   };
 
   render() {
@@ -30,7 +35,9 @@ export default class Rectangle_Shape extends Component {
           target={this.props.target}
           draggable={true}
           sizeable={false}
+          resizable={true}
           onDrag={this.onDrag}
+          onResize={this.onResize}
         />
         <div 
           className={this.uniqueName}

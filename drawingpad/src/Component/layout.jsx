@@ -44,7 +44,7 @@ class Layout extends Component {
             var uniqueName=".Moveable"+index;
             arrayShapes[index].target=document.querySelector(uniqueName)
             if(index!=this.state.selectedIndex){
-                arrayShapes[this.state.isSelected].target=null;
+                arrayShapes[this.state.selectedIndex].target=null;
             }
             this.setState({arrayShapes});
             this.setState({isSelected:index});
@@ -228,6 +228,48 @@ class Layout extends Component {
     this.setState({ arrayShapes});
   };
 
+  onResize=({width,height},shape)=>{
+    console.log("Resizing ",shape);
+    let arrayShapes=this.state.arrayShapes;
+    if(shape=="Rectangle"){    
+        arrayShapes[this.state.isSelected].width=width;
+        arrayShapes[this.state.isSelected].height=height;
+    }
+    else{
+        if(height==this.state.arrayShapes[this.state.isSelected].height){
+            arrayShapes[this.state.isSelected].width=width;
+            arrayShapes[this.state.isSelected].height=width;        
+        }
+        else if (width==this.state.arrayShapes[this.state.isSelected].width){
+            arrayShapes[this.state.isSelected].width=height;
+            arrayShapes[this.state.isSelected].height=height;        
+        }
+        else{
+            if(height>width){
+                arrayShapes[this.state.isSelected].width=height;
+                arrayShapes[this.state.isSelected].height=height; 
+            }
+            else{
+                arrayShapes[this.state.isSelected].width=width;
+                arrayShapes[this.state.isSelected].height=width;        
+            }
+        }
+        if(shape=="Circle"){
+            var temp=arrayShapes[this.state.isSelected].height;
+            arrayShapes[this.state.isSelected].radius=(temp)/2; 
+            arrayShapes[this.state.isSelected].x_cord=(temp)/2; 
+            arrayShapes[this.state.isSelected].y_cord=(temp)/2;
+        }
+        if(shape=="Triangle"){
+            var temp=arrayShapes[this.state.isSelected].height;
+            var newpolygon='0,'+temp+','+temp/2+',0,'+temp+','+temp;
+            arrayShapes[this.state.isSelected].polygonPoints=newpolygon;
+        }
+    }
+    
+    this.setState({ arrayShapes});
+  }
+
     render(){
         let toolbar_items=['New','Open','Save'];
         let right_horizontal_bar_items=[]
@@ -248,7 +290,7 @@ class Layout extends Component {
                 <div id="toolbar" className="z-depth-1">{toolbar_items}</div>
                 <div id="center_body" className="row">
                     <div id="left_horizontal_bar" className="col s2 z-depth-1">{this.createShapes()}</div>
-                    <Shapes  {...this.state} onDrag={this.onDrag} clicke={this.clicked} setTarget={this.setTarget} mouseHover={this.mouseHover} mouseLeave={this.mouseLeave} mousedown={this.mousedown} mouseup={this.mouseup}/>
+                    <Shapes  {...this.state} onDrag={this.onDrag} onResize={this.onResize} clicke={this.clicked} setTarget={this.setTarget} mouseHover={this.mouseHover} mouseLeave={this.mouseLeave} mousedown={this.mousedown} mouseup={this.mouseup}/>
                     <div id="right_horizontal_bar" className="col s2 z-depth-1">{right_horizontal_bar_items}</div>
                 </div>
             </div>
