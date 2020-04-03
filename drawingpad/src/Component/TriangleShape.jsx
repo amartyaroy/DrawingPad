@@ -1,30 +1,48 @@
 import React, { Component } from 'react';
-import ResizableRect from 'react-resizable-rotatable-draggable';
+import Moveable from "react-moveable";
 
-export default class TriangleShape extends Component {
-    componentDidMount(){
-      console.log("nkadhbv",this.props)
-        var a=document.createElement("div")
-        a.innerHTML="<svg id="+this.props.id+" height="+this.props.height+" width="+this.props.width+" fill="+this.props.fill+" stroke="+this.props.stroke+" stroke-width="+this.props.strokeWidth+"> <polygon points="+this.props.polygonPoints+" /> </svg>";
-        document.getElementsByClassName("fFutOK")[this.props.id].appendChild( a );
-    }
-    render() {    
-        return (
-            <div  onClick={()=>this.props.cliclee(this.props.id)}>
-                <ResizableRect
-                    left={this.props.left}
-                    top={this.props.top}
-                    width={this.props.width}
-                    height={this.props.height}
-                    stroke={this.props.stroke}
-                    rotateAngle={this.props.rotateAngle}
-                    zoomable='n, w, s, e, nw, ne, se, sw'
-                    onRotate={this.props.Rot}
-                    onResize={this.props.Res}
-                    onDrag={this.props.Dra}
-                />       
-            </div>
-          );
-    }
+export default class Rectangle_Shape extends Component {
+ uniqueName="Moveable"+this.props.id;
+  componentDidMount() {
+    this.props.setTarget(this.props.id,document.querySelector("."+this.uniqueName));
+  }
+
+  onDrag = (...args) => {
+    console.log({ args });
+    this.props.onDrag(...args);
+  };
+
+  render() {
+    const { left, top, height, width,fill,stroke,strokeWidth,polygonPoints } = this.props;
+    return (
+      <div  onMouseEnter={()=>this.props.cliclee(this.props.id)} >
+        <Moveable
+          height={height}
+          width={width}
+          left={left}
+          top={top}
+          throttleDrag={1}
+          container={document.querySelector("canvas_body")}
+          target={this.props.target}
+          draggable={true}
+          sizeable={false}
+          onDrag={this.onDrag}
+        />
+        <div 
+          className={this.uniqueName}
+          style={{
+            width: `${width}px`,
+            height: `${height}px`,
+            left: `${left}px`,
+            top: `${top}px`,
+            position: "absolute",
+            //border: "1px solid black"
+          }} >
+          <svg height={height} width={width} fill={fill} stroke={stroke} stroke-width={strokeWidth}> <polygon points={polygonPoints} /> 
+          </svg>
+        </div>
+      </div>
+    );
+  }
 }
  
