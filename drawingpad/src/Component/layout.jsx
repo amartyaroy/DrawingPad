@@ -13,14 +13,59 @@ class Layout extends Component {
         arrayShapes:[],
         background:'#000000',
         isSelected:0,
+        selectedIndex:0,
+        mouse:false
     }
     clicked=(index)=>{
-      
+        console.log("Selected :",index);
         console.log(index);
         this.setState({
-            isSelected: index
+            isSelected: index,
+            selectedIndex:index
         })
+        this.setState({selectedIndex:index});
+
     }
+
+    mousedown=()=>{
+        console.log("mouse pressed");
+        this.setState({mouse:true})
+    }
+
+    mouseup=()=>{
+        console.log("mouse up");
+        this.setState({mouse:false})
+    }
+
+    mouseHover=(index)=>{
+        if(!this.state.mouse){
+            console.log("Enter :",index);
+            let arrayShapes=this.state.arrayShapes;
+            var uniqueName=".Moveable"+index;
+            arrayShapes[index].target=document.querySelector(uniqueName)
+            if(index!=this.state.selectedIndex){
+                arrayShapes[this.state.selectedIndex].target=null;
+            }
+            this.setState({arrayShapes});
+            this.setState({isSelected:index});
+        }
+    }
+
+    mouseLeave=(index)=>{
+        console.log("Exit :",index);
+        if(index!=this.state.selectedIndex){    
+            let arrayShapes=this.state.arrayShapes;
+            arrayShapes[index].target=null
+            var uniqueName=".Moveable"+this.state.selectedIndex;
+            arrayShapes[this.state.selectedIndex].target=document.querySelector(uniqueName)
+            this.setState({arrayShapes});   
+        }     
+        this.setState({isSelected:this.state.selectedIndex});       
+        if(this.state.mouse){
+            this.setState({mouse:false})
+        } 
+    }
+
     handleChangeColor=(color)=>{
         this.setState({ background: color.hex });
 
@@ -166,9 +211,14 @@ class Layout extends Component {
    }
 
    setTarget=(index,value)=>{
+    console.log("New added and selected :",index);
     let arrayShapes=this.state.arrayShapes;
     arrayShapes[index].target=value;
+    if(this.state.isSelected!=index){
+        arrayShapes[this.state.isSelected].target=null;
+    }
     this.setState({arrayShapes});
+    this.setState({isSelected:index,selectedIndex:index})
    }
 
   onDrag = ({ left, top }) => {
@@ -177,6 +227,48 @@ class Layout extends Component {
     arrayShapes[this.state.isSelected].top=top;
     this.setState({ arrayShapes});
   };
+
+  onResize=({width,height},shape)=>{
+    console.log("Resizing ",shape);
+    let arrayShapes=this.state.arrayShapes;
+    if(shape=="Rectangle"){    
+        arrayShapes[this.state.isSelected].width=width;
+        arrayShapes[this.state.isSelected].height=height;
+    }
+    else{
+        if(height==this.state.arrayShapes[this.state.isSelected].height){
+            arrayShapes[this.state.isSelected].width=width;
+            arrayShapes[this.state.isSelected].height=width;        
+        }
+        else if (width==this.state.arrayShapes[this.state.isSelected].width){
+            arrayShapes[this.state.isSelected].width=height;
+            arrayShapes[this.state.isSelected].height=height;        
+        }
+        else{
+            if(height>width){
+                arrayShapes[this.state.isSelected].width=height;
+                arrayShapes[this.state.isSelected].height=height; 
+            }
+            else{
+                arrayShapes[this.state.isSelected].width=width;
+                arrayShapes[this.state.isSelected].height=width;        
+            }
+        }
+        if(shape=="Circle"){
+            var temp=arrayShapes[this.state.isSelected].height;
+            arrayShapes[this.state.isSelected].radius=(temp)/2; 
+            arrayShapes[this.state.isSelected].x_cord=(temp)/2; 
+            arrayShapes[this.state.isSelected].y_cord=(temp)/2;
+        }
+        if(shape=="Triangle"){
+            var temp=arrayShapes[this.state.isSelected].height;
+            var newpolygon='0,'+temp+','+temp/2+',0,'+temp+','+temp;
+            arrayShapes[this.state.isSelected].polygonPoints=newpolygon;
+        }
+    }
+    
+    this.setState({ arrayShapes});
+  }
 
     render(){
         let toolbar_items=['New','Open','Save'];
@@ -198,12 +290,11 @@ class Layout extends Component {
                 <div id="toolbar" className="z-depth-1">{toolbar_items}</div>
                 <div id="center_body" className="row">
                     <div id="left_horizontal_bar" className="col s2 z-depth-1">{this.createShapes()}</div>
-                    <Shapes  {...this.state} onDrag={this.onDrag} clicke={this.clicked} setTarget={this.setTarget}/>
+                    <Shapes  {...this.state} onDrag={this.onDrag} onResize={this.onResize} clicke={this.clicked} setTarget={this.setTarget} mouseHover={this.mouseHover} mouseLeave={this.mouseLeave} mousedown={this.mousedown} mouseup={this.mouseup}/>
                     <div id="right_horizontal_bar" className="col s2 z-depth-1">{right_horizontal_bar_items}</div>
                 </div>
             </div>
         )
     }
-    //<Shapes   name={this.state.arrayShapes} Rot={this.handleRotate} Res={this.handleResize} Dra={this.handleDrag} clicke={this.clicked} clickResizable={this.clickResizable} clickScalable={this.clickScalable} setTransform={this.setTransform} setLabel={this.setLabel} onDrag={this.onDrag} onPinch={this.onPinch} onResize={this.onResize} onRotate={this.onRotate} onEnd={this.onEnd} onScale={this.onScale}/>
   }
 export default Layout

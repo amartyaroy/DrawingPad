@@ -11,16 +11,16 @@ export default class Shapes extends Component {
         let list=[];
         this.props.arrayShapes.map((ele,i)=>{
             if(this.props.arrayShapes[i].shape === "Rectangle"){
-            list.push(<RectangleShape id={i} {...this.props.arrayShapes[i]} onDrag={this.props.onDrag} cliclee={this.props.clicke} setTarget={this.props.setTarget}/>);
+            list.push(<RectangleShape id={i} {...this.props.arrayShapes[i]} onDrag={this.props.onDrag} onResize={this.props.onResize} cliclee={this.props.clicke} setTarget={this.props.setTarget} mouseHover={this.props.mouseHover} mouseLeave={this.props.mouseLeave} mousedown={this.props.mousedown} mouseup={this.props.mouseup}/>);
             }
             else if(this.props.arrayShapes[i].shape ===  "Circle"){
-                list.push(<CircleShape {...this.props.arrayShapes[i]} id={i} onDrag={this.props.onDrag} cliclee={this.props.clicke} setTarget={this.props.setTarget}/>)
+                list.push(<CircleShape {...this.props.arrayShapes[i]} id={i} onDrag={this.props.onDrag} onResize={this.props.onResize} cliclee={this.props.clicke} setTarget={this.props.setTarget} mouseHover={this.props.mouseHover} mouseLeave={this.props.mouseLeave} mousedown={this.props.mousedown} mouseup={this.props.mouseup}/>);
             }
             else if(this.props.arrayShapes[i].shape ===  "Square"){
-                list.push(<SquareShape {...this.props.arrayShapes[i]} id={i} onDrag={this.props.onDrag} cliclee={this.props.clicke} setTarget={this.props.setTarget}/>)
+                list.push(<SquareShape {...this.props.arrayShapes[i]} id={i} onDrag={this.props.onDrag} onResize={this.props.onResize} cliclee={this.props.clicke} setTarget={this.props.setTarget} mouseHover={this.props.mouseHover} mouseLeave={this.props.mouseLeave} mousedown={this.props.mousedown} mouseup={this.props.mouseup}/>);
             }
             else{
-                list.push(<TriangleShape {...this.props.arrayShapes[i]} id={i} onDrag={this.props.onDrag} cliclee={this.props.clicke} setTarget={this.props.setTarget}/>)
+                list.push(<TriangleShape {...this.props.arrayShapes[i]} id={i} onDrag={this.props.onDrag} onResize={this.props.onResize} cliclee={this.props.clicke} setTarget={this.props.setTarget} mouseHover={this.props.mouseHover} mouseLeave={this.props.mouseLeave} mousedown={this.props.mousedown} mouseup={this.props.mouseup}/>);
             }
         })
         
