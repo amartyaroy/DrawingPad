@@ -9,7 +9,7 @@ class Layout extends Component {
         //this.handleRotate = this.handleRotate.bind(this);
     }
     state={
-        left_horizontal_bar_items:['Rectangle','Circle','Square','Triangle'],
+        left_horizontal_bar_items:['Save','Rectangle','Circle','Square','Triangle'],
         arrayShapes:[],
         background:'#000000',
         isSelected:0,
@@ -189,7 +189,7 @@ class Layout extends Component {
            {
                this.state.left_horizontal_bar_items.map(ele=>{
                    return (
-                       <button onClick={this.selectShape.bind(this,ele)} id={ele}>{ele}</button>
+                       <button className="btn btn-primary" onClick={this.selectShape.bind(this,ele)} id={ele}>{ele}</button>
                    )
                })
            }
@@ -287,9 +287,9 @@ class Layout extends Component {
         
         return(
             <div id="final_layout">
-                <div id="toolbar" className="z-depth-1">{toolbar_items}</div>
+                <div id="toolbar" className=" z-depth-1">{this.createShapes()}</div>
                 <div id="center_body" className="row">
-                    <div id="left_horizontal_bar" className="col s2 z-depth-1">{this.createShapes()}</div>
+                    
                     <Shapes  {...this.state} onDrag={this.onDrag} onResize={this.onResize} clicke={this.clicked} setTarget={this.setTarget} mouseHover={this.mouseHover} mouseLeave={this.mouseLeave} mousedown={this.mousedown} mouseup={this.mouseup}/>
                     <div id="right_horizontal_bar" className="col s2 z-depth-1">{right_horizontal_bar_items}</div>
                 </div>

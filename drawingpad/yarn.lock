@@ -9208,7 +9208,7 @@ react-resizable-rotatable-draggable@^0.2.0:
   resolved "https://registry.yarnpkg.com/react-resizable-rotatable-draggable/-/react-resizable-rotatable-draggable-0.2.0.tgz#de235785bed2b277286ac6668b094eaa7a024d11"
   integrity sha512-F8TPx3z7/AcmRViySbYV3LpUWXFpHlGAmKmNcYMgPlS+h1eYFazRG3xYS8Z6e48hWY1EcCny/YNrwRNUrap8CQ==
 
-react-scripts@3.4.1:
+react-scripts@^3.4.1:
   version "3.4.1"
   resolved "https://registry.yarnpkg.com/react-scripts/-/react-scripts-3.4.1.tgz#f551298b5c71985cc491b9acf3c8e8c0ae3ada0a"
   integrity sha512-JpTdi/0Sfd31mZA6Ukx+lq5j1JoKItX7qqEK4OiACjVQletM1P38g49d9/D0yTxp9FrSF+xpJFStkGgKEIRjlQ==
