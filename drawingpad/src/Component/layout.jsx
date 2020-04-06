@@ -322,8 +322,6 @@ class Layout extends Component {
             <div id="final_layout">
                 <div id="toolbar" className=" z-depth-1">{this.createShapes()}</div>
                 <div id="center_body" className="row">
-
-                    <div id="left_horizontal_bar" className="col s2 z-depth-1">{this.createShapes()}</div>
                     <Shapes  {...this.state} onDrag={this.onDrag} onResize={this.onResize} onRotate={this.onRotate} clicke={this.clicked} setTarget={this.setTarget} mouseHover={this.mouseHover} mouseLeave={this.mouseLeave} mousedown={this.mousedown} mouseup={this.mouseup} canvasmousedown={this.canvasmousedown} canvasmouseup={this.canvasmouseup}/>
                     <div id="right_horizontal_bar" className="col s2 z-depth-1">{right_horizontal_bar_items}</div>
                     
