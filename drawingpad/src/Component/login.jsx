@@ -2,33 +2,21 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import { Authenticator } from "@bitpod/platform-bar-shell-react";
 import { getPlatformBarConfig } from  '../Config';
-
-import Canvas from './canvas';
-
 import Layout from './layout';
 
 import './login.css';
 
 
 let PlatformBarConfig = getPlatformBarConfig();
-let access_token;
-function state(){
-  PlatformBarConfig["on_auth_state_change"] = function(state1) {
-  
-    if(state1!=null){
-      access_token=state1.access_token;
-    
-    }
-   };
-  return state;
-}
-
-
-
-
-
+PlatformBarConfig["on_auth_state_change"] = function(state) {
+  console.log("state",state);
+};
 //this is the first checkinf
-export default class login extends Component {
+class login extends Component {
+  state={
+    guestUser: false,
+    loading:false
+  }
   constructor(props) {
       super(props);
 
@@ -36,45 +24,30 @@ export default class login extends Component {
         window.React = React;
         window.ReactDOM = ReactDOM; 
     }
-    
   }
-  state={
-    isLoggedIn:false
-  }
-
-
-
-  setLoginState=(status)=>{
-
-    console.log('setting state',status);
-    if(this.status!=null){
-     
-      this.setState({isLoggedIn:true})
-    }
-    console.log('set state',this.state.isLoggedIn);
-    
-  }
- 
   
-
+  componentDidMount(){
+    setTimeout(()=>{
+      this.setState({
+        guestUser: JSON.parse(localStorage[localStorage[window.$config.oauth.clientId+"lastactiveuserid"]]).guestUser
+      })
+    },1000)
+  }
   render() {
-    let { isLoggedIn } =this.state;
     return (
       <div id="container_box">  
         <div id="header_bar">
           <Authenticator initConfig={ PlatformBarConfig }></Authenticator>
           <h3 id="app_name">Ⓓⓡⓐⓦⓘⓝⓖ Ⓟⓐⓓ</h3>
         </div>
-        <div id="canvas_box">
-
-
-          <Layout/>
+        <div id="canvas_box">{
+          (this.state.guestUser)?<div>You are logged out</div>:<Layout/>
+        }
 
         </div>
-
       </div>
     );
   }
 }
 
-
+export default login;

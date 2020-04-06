@@ -17,8 +17,14 @@ export default class Rectangle_Shape extends Component {
     this.props.onResize(...args,this.props.shape);
   };
 
+  onRotate = (...args) => {
+    //console.log({ args });
+    this.props.onRotate(...args);
+  };
+
+
   render() {
-    const { left, top, height, width,fill,stroke,strokeWidth,radius,y_cord,x_cord } = this.props;
+    const { left, top, height, width,fill,stroke,strokeWidth,radius,y_cord,x_cord,rotate } = this.props;
     return (
       <div  onMouseEnter={()=>this.props.mouseHover(this.props.id)} 
             onMouseLeave={()=>this.props.mouseLeave(this.props.id)}
@@ -36,8 +42,10 @@ export default class Rectangle_Shape extends Component {
           draggable={true}
           sizeable={false}
           resizable={true}
+          rotatable={true}
           onDrag={this.onDrag}
           onResize={this.onResize}
+          onRotate={this.onRotate}
         />
         <div 
           className={this.uniqueName}
@@ -47,10 +55,10 @@ export default class Rectangle_Shape extends Component {
             left: `${left}px`,
             top: `${top}px`,
             position: "absolute",
-            //border: "1px solid black"
+            transform:`rotate(${rotate}deg)`
           }} >
           <svg height={height} width={width} >
-                <circle cx={x_cord}  cy={y_cord} r={radius} stroke={stroke} stroke-width={strokeWidth} fill={fill} />
+                <circle cx={x_cord}  cy={y_cord} r={radius-5} stroke={stroke} stroke-width={strokeWidth} fill={fill} />
             </svg>
         </div>
       </div>

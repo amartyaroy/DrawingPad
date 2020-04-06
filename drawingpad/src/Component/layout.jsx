@@ -30,13 +30,38 @@ class Layout extends Component {
     mousedown=()=>{
         console.log("mouse pressed");
         this.setState({mouse:true})
+        this.setState({selectedIndex:this.state.isSelected});
     }
 
     mouseup=()=>{
         console.log("mouse up");
         this.setState({mouse:false})
+        let arrayShapes=this.state.arrayShapes;
+        arrayShapes[this.state.isSelected].fixed_angle=arrayShapes[this.state.isSelected].rotate;
+        this.setState({ arrayShapes});
     }
 
+    canvasmousedown=()=>{
+        if(this.state.arrayShapes.length>0){
+            console.log("canvas mouse pressed");
+            this.setState({mouse:true})
+            this.setState({selectedIndex:this.state.isSelected});
+            
+            // let arrayShapes=this.state.arrayShapes;
+            // arrayShapes[this.state.isSelected].target=null;
+            // this.setState({ arrayShapes});
+        }
+    }
+
+    canvasmouseup=()=>{
+        if(this.state.arrayShapes.length>0){
+            console.log("canvas mouse up");
+            this.setState({mouse:false})
+            let arrayShapes=this.state.arrayShapes;
+            arrayShapes[this.state.isSelected].fixed_angle=arrayShapes[this.state.isSelected].rotate;
+            this.setState({ arrayShapes});
+        }
+    }
     mouseHover=(index)=>{
         if(!this.state.mouse){
             console.log("Enter :",index);
@@ -52,18 +77,20 @@ class Layout extends Component {
     }
 
     mouseLeave=(index)=>{
-        console.log("Exit :",index);
-        if(index!=this.state.selectedIndex){    
-            let arrayShapes=this.state.arrayShapes;
-            arrayShapes[index].target=null
-            var uniqueName=".Moveable"+this.state.selectedIndex;
-            arrayShapes[this.state.selectedIndex].target=document.querySelector(uniqueName)
-            this.setState({arrayShapes});   
-        }     
-        this.setState({isSelected:this.state.selectedIndex});       
-        if(this.state.mouse){
-            this.setState({mouse:false})
-        } 
+        if(!this.state.mouse){
+            console.log("Exit :",index);
+            if(index!=this.state.selectedIndex){    
+                let arrayShapes=this.state.arrayShapes;
+                arrayShapes[index].target=null
+                var uniqueName=".Moveable"+this.state.selectedIndex;
+                arrayShapes[this.state.selectedIndex].target=document.querySelector(uniqueName)
+                this.setState({arrayShapes});   
+            }     
+            this.setState({isSelected:this.state.selectedIndex});       
+            if(this.state.mouse){
+                this.setState({mouse:false})
+            } 
+        }
     }
 
     handleChangeColor=(color)=>{
@@ -86,14 +113,14 @@ class Layout extends Component {
                 height:100 ,
                 top: 100,
                 left: 200,
-                rotateAngle: 0,
                 strokeWidth:'3',
                 stroke:'#000000',
                 fill:'white',
                 rotate: 0,
+                fixed_angle:0,
                 scaleX: 1,
                 scaleY: 1,
-                matrix3d: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
+                matrix3d: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1],
             })    
                 
         }
@@ -111,11 +138,11 @@ class Layout extends Component {
                 height:100 ,
                 top: 100,
                 left: 200,
-                rotateAngle: 0,
                 strokeWidth:'3',
                 stroke:'#000000',
                 fill:'white',
                 rotate: 0,
+                fixed_angle:0,
                 scaleX: 1,
                 scaleY: 1,
                 matrix3d: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
@@ -136,12 +163,12 @@ class Layout extends Component {
                 height:100 ,
                 top: 100,
                 left: 200,
-                rotateAngle: 0,
                 strokeWidth:'3',
                 stroke:'#000000',
                 fill:'white',
                 polygonPoints:'0,100,50,0,100,100',
                 rotate: 0,
+                fixed_angle:0,
                 scaleX: 1,
                 scaleY: 1,
                 matrix3d: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
@@ -163,7 +190,6 @@ class Layout extends Component {
                 height:100 ,
                 top: 100,
                 left: 200,
-                rotateAngle: 0,
                 strokeWidth:'3',
                 stroke:'#000000',
                 fill:'white',
@@ -171,6 +197,7 @@ class Layout extends Component {
                 y_cord:'50',
                 radius:'50',
                 rotate: 0,
+                fixed_angle:0,
                 scaleX: 1,
                 scaleY: 1,
                 matrix3d: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
@@ -269,6 +296,12 @@ class Layout extends Component {
     
     this.setState({ arrayShapes});
   }
+  onRotate=({rotate})=>{
+    console.log(rotate)
+    let arrayShapes=this.state.arrayShapes;
+    arrayShapes[this.state.isSelected].rotate=arrayShapes[this.state.isSelected].fixed_angle+rotate;
+    this.setState({ arrayShapes});
+  }
 
     render(){
         let toolbar_items=['New','Open','Save'];
@@ -289,9 +322,14 @@ class Layout extends Component {
             <div id="final_layout">
                 <div id="toolbar" className=" z-depth-1">{this.createShapes()}</div>
                 <div id="center_body" className="row">
-                    
-                    <Shapes  {...this.state} onDrag={this.onDrag} onResize={this.onResize} clicke={this.clicked} setTarget={this.setTarget} mouseHover={this.mouseHover} mouseLeave={this.mouseLeave} mousedown={this.mousedown} mouseup={this.mouseup}/>
+
+                    <div id="left_horizontal_bar" className="col s2 z-depth-1">{this.createShapes()}</div>
+                    <Shapes  {...this.state} onDrag={this.onDrag} onResize={this.onResize} onRotate={this.onRotate} clicke={this.clicked} setTarget={this.setTarget} mouseHover={this.mouseHover} mouseLeave={this.mouseLeave} mousedown={this.mousedown} mouseup={this.mouseup} canvasmousedown={this.canvasmousedown} canvasmouseup={this.canvasmouseup}/>
                     <div id="right_horizontal_bar" className="col s2 z-depth-1">{right_horizontal_bar_items}</div>
+                    
+                   
+
+                   
                 </div>
             </div>
         )
